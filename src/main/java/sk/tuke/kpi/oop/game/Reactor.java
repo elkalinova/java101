@@ -20,6 +20,13 @@ public class Reactor extends AbstractActor {
     public int getDamage()
     { return damage;}
 
-    public  increaseTemperature(int increment)
-    { }
+    public void increaseTemperature(int increment)
+    { temperature += increment;
+        if (temperature=>2000 && temperature=<6000)
+            int damage = temperature/40 - 50;
+        if (damage < damage)
+         damage = damage;
+
+
+    }
 }
