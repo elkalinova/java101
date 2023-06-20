@@ -2,5 +2,5 @@
 projekt java košice
 hahaha
 
-utorok
+utorok 20.6.
 
