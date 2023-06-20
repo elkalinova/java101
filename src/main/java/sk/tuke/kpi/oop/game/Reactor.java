@@ -15,4 +15,11 @@ public class Reactor extends AbstractActor {
         normalAnimation = new Animation("sprites/reactor_on.png", 80,80, 0.1F, Animation.PlayMode.LOOP_PINGPONG);
         setAnimation(normalAnimation);
     }
+    public int getTemperature()
+        { return temperature;}
+    public int getDamage()
+    { return damage;}
+
+    public  increaseTemperature(int increment)
+    { }
 }
