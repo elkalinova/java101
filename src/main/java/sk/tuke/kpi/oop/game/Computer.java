@@ -14,6 +14,7 @@ public class Computer extends AbstractActor {
     public float add(float x1, float x2){
         return x1+x2;
     }
+
     public float sub(float x1, float x2){
         return x1-x2;
 

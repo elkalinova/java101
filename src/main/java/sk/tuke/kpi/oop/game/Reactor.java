@@ -9,7 +9,7 @@ public class Reactor extends AbstractActor {
     private int temperature;
     private boolean state;
     private int damage;
-    private Animation normalAnimation;
+       private Animation normalAnimation;
     private Animation brokenAnimation;
     private Animation hotAnimation;
 
@@ -18,6 +18,8 @@ public class Reactor extends AbstractActor {
         this.temperature = 0;
         this.state = false;
         this.damage = 0;
+        Animation animation = new Animation("sprites/reactor.png");
+
         this.normalAnimation = new Animation(
             "sprites/reactor_on.png",
             80, 80,
@@ -38,7 +40,7 @@ public class Reactor extends AbstractActor {
         );
 
         // set init reactor animation
-        setAnimation(this.normalAnimation);
+        setAnimation(animation);
     }
 
     public int getTemperature() {
@@ -127,5 +129,17 @@ public class Reactor extends AbstractActor {
 
         this.temperature = 0;
         updateAnimation();
+    }
+
+    //zapnutie a vypnute reaktora
+    public void turnOn(){
+        this.state= true;
+
+    }
+    public void turnOff(){
+        this.state= false;
+    }
+    public boolean running(){
+        return this.state;
     }
 }
