@@ -6,6 +6,7 @@ import sk.tuke.kpi.gamelib.graphics.Animation;
 
 
 public class Reactor extends AbstractActor {
+    private  Animation onAnimation;
     private int temperature;
     private boolean state;
     private int damage;
@@ -18,7 +19,7 @@ public class Reactor extends AbstractActor {
         this.temperature = 0;
         this.state = false;
         this.damage = 0;
-        Animation animation = new Animation("sprites/reactor.png");
+        this.onAnimation = new Animation("sprites/reactor.png");
 
         this.normalAnimation = new Animation(
             "sprites/reactor_on.png",
@@ -40,7 +41,7 @@ public class Reactor extends AbstractActor {
         );
 
         // set init reactor animation
-        setAnimation(animation);
+        setAnimation(onAnimation);
     }
 
     public int getTemperature() {
@@ -52,43 +53,48 @@ public class Reactor extends AbstractActor {
     }
 
     public void increaseTemperature(int increment) {
-        if (increment < 0) {
-            return;
-        }
 
-        this.temperature = this.temperature + increment;
+            if (increment < 0 || !running())  {
+                return;
+            }
 
-        if (this.damage == 100) {
-            return;
-        }
+            this.temperature = this.temperature + increment;
 
-        updateAnimation();
+            if (this.damage == 100) {
+                return;
+            }
 
-        // update damage
-        if (this.temperature >= 2000) {
-            if (this.temperature >= 6000) {
-                this.damage = 100;
-            } else {
-                int damage = (this.temperature / 40) - 50;
-                if (this.damage < damage) {
-                    this.damage = damage;
+            updateAnimation();
+
+            // update damage
+            if (this.temperature >= 2000) {
+                if (this.temperature >= 6000) {
+                    this.damage = 100;
+                } else {
+                    int damage = (this.temperature / 40) - 50;
+                    if (this.damage < damage) {
+                        this.damage = damage;
+                    }
                 }
             }
-        }
+
     }
 
     public void decreaseTemperature(int decrement) {
-        if (decrement < 0) {
-            return;
-        }
 
-        this.temperature = this.temperature - decrement;
 
-        if (this.damage == 100) {
-            return;
-        }
+            if (decrement < 0 || !running()) {
+                return;
+            }
 
-        updateAnimation();
+            this.temperature = this.temperature - decrement;
+
+            if (this.damage == 100) {
+                return;
+            }
+
+            updateAnimation();
+
     }
 
     private void updateAnimation() {
@@ -132,12 +138,23 @@ public class Reactor extends AbstractActor {
     }
 
     //zapnutie a vypnute reaktora
-    public void turnOn(){
+    public void turnOn() {
         this.state= true;
+        if (this.damage == 100) {
+            setAnimation(brokenAnimation); //ked je uz zniceny zostane animacia broken
+        }
+        getAnimation().play();//zisti v akom stave je animacia a play z toho stavu
+        updateAnimation();
+
 
     }
-    public void turnOff(){
+    public void turnOff() {
         this.state= false;
+        if (this.damage == 100) {
+          setAnimation(brokenAnimation);  //ked je uz zniceny zostane animacia broken
+        }
+        getAnimation().pause(); //zisti v akom stave je animacia a pause v tomto stave
+        updateAnimation();
     }
     public boolean running(){
         return this.state;
