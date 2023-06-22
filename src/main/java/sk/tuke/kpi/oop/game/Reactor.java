@@ -13,12 +13,15 @@ public class Reactor extends AbstractActor {
        private Animation normalAnimation;
     private Animation brokenAnimation;
     private Animation hotAnimation;
+    private Light light;
 
     public Reactor() {
         // init attributes
         this.temperature = 0;
         this.state = false;
         this.damage = 0;
+        this.light = light;
+
         this.onAnimation = new Animation("sprites/reactor.png");
 
         this.normalAnimation = new Animation(
@@ -159,4 +162,9 @@ public class Reactor extends AbstractActor {
     public boolean running(){
         return this.state;
     }
+    public void addLight(Light light){
+        this.light = light;
+
+    }
+
 }
